@@ -12,8 +12,8 @@ router.get('/signup', function(req, res, next) {
 });
 
 /* Password Category. */
-router.get('/signup', function(req, res, next) {
-  res.render('signup', { title: 'Password Management System' });
+router.get('/passwordCategory', function(req, res, next) {
+  res.render('password-category', { title: 'Password Management System' });
 });
 
 module.exports = router;
