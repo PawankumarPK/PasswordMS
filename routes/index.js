@@ -21,4 +21,15 @@ router.get('/add-new-category', function(req, res, next) {
   res.render('addNewCategory', { title: 'Password Management System' });
 });
 
+
+/* Add new password. */
+router.get('/add-new-password', function(req, res, next) {
+  res.render('add-new-password', { title: 'Password Management System' });
+});
+
+
+/* view all password. */
+router.get('/view-all-password', function(req, res, next) {
+  res.render('view-all-password', { title: 'Password Management System' });
+});
 module.exports = router;
