@@ -16,4 +16,9 @@ router.get('/passwordCategory', function(req, res, next) {
   res.render('password-category', { title: 'Password Management System' });
 });
 
+/* Add new  Category. */
+router.get('/add-new-category', function(req, res, next) {
+  res.render('addNewCategory', { title: 'Password Management System' });
+});
+
 module.exports = router;
