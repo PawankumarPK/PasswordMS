@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt = require("bcryptjs")
 
 var userModule = require("../modules/user")
 
@@ -49,6 +50,7 @@ router.post('/signup', checkUsername, checkEmail, function (req, res, next) {
   if (password != confpassword) {
     res.render('signup', { title: 'Password Management System', msg: "Password not matched" });
   } else {
+    password = bcrypt.hashSync(req.body.password, 10)
     var userDetail = new userModule({
       username: username,
       email: email,
