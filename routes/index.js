@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
+
 var bcrypt = require("bcryptjs")
+
+var jwt = require("jsonwebtoken")
+
+//web token
+//store in local storage
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
 
 var userModule = require("../modules/user")
 
@@ -18,17 +28,24 @@ router.post('/', function (req, res, next) {
   checkUser.exec((err, data) => {
     if (err) throw err
 
-    var getPassword  = data.password
-    if(bcrypt.compareSync(password,getPassword)){
-      res.render('index', { title: 'Password Management System', msg: "Login Successfully" });
-    }else{
+    var getUserID = data._id
+    var getPassword = data.password
+    if (bcrypt.compareSync(password, getPassword)) {
+      var token = jwt.sign({ userID: getUserID }, "loginToken")
+      //store data locally 
+      localStorage.setItem("userToken", token)
+      localStorage.setItem("loginUser", username)
+      res.redirect("/dashboard")
+    } else {
       res.render('index', { title: 'Password Management System', msg: "Invalid username and password" });
     }
-
-    
   })
+});
 
-
+/* GET dashboard page. */
+router.get('/dashboard', function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: " " });
 });
 
 function checkEmail(req, res, next) {
