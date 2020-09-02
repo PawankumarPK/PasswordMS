@@ -14,6 +14,17 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 var userModule = require("../modules/user")
 
+function checkLoginUser(req, res, next) {
+  var userToken = localStorage.getItem("userToken")
+  try {
+    var decode = jwt.verify(userToken, "loginToken")
+  } catch{
+    res.redirect("/")
+  }
+  next()
+
+}
+
 /* GET login page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Password Management System', msg: " " });
@@ -31,6 +42,7 @@ router.post('/', function (req, res, next) {
     var getUserID = data._id
     var getPassword = data.password
     if (bcrypt.compareSync(password, getPassword)) {
+      //we can add any value from userID
       var token = jwt.sign({ userID: getUserID }, "loginToken")
       //store data locally 
       localStorage.setItem("userToken", token)
@@ -43,7 +55,7 @@ router.post('/', function (req, res, next) {
 });
 
 /* GET dashboard page. */
-router.get('/dashboard', function (req, res, next) {
+router.get('/dashboard', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
   res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: " " });
 });
@@ -106,24 +118,24 @@ router.post('/signup', checkUsername, checkEmail, function (req, res, next) {
 });
 
 /* Password Category. */
-router.get('/passwordCategory', function (req, res, next) {
+router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
   res.render('password-category', { title: 'Password Management System' });
 });
 
 /* Add new  Category. */
-router.get('/add-new-category', function (req, res, next) {
+router.get('/add-new-category', checkLoginUser, function (req, res, next) {
   res.render('addNewCategory', { title: 'Password Management System' });
 });
 
 
 /* Add new password. */
-router.get('/add-new-password', function (req, res, next) {
+router.get('/add-new-password', checkLoginUser, function (req, res, next) {
   res.render('add-new-password', { title: 'Password Management System' });
 });
 
 
 /* view all password. */
-router.get('/view-all-password', function (req, res, next) {
+router.get('/view-all-password', checkLoginUser, function (req, res, next) {
   res.render('view-all-password', { title: 'Password Management System' });
 });
 
