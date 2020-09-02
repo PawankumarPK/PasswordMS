@@ -6,7 +6,29 @@ var userModule = require("../modules/user")
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Password Management System' });
+  res.render('index', { title: 'Password Management System', msg: " " });
+});
+
+router.post('/', function (req, res, next) {
+
+  var username = req.body.uname
+  var password = req.body.password
+  var checkUser = userModule.findOne({ username: username })
+
+  checkUser.exec((err, data) => {
+    if (err) throw err
+
+    var getPassword  = data.password
+    if(bcrypt.compareSync(password,getPassword)){
+      res.render('index', { title: 'Password Management System', msg: "Login Successfully" });
+    }else{
+      res.render('index', { title: 'Password Management System', msg: "Invalid username and password" });
+    }
+
+    
+  })
+
+
 });
 
 function checkEmail(req, res, next) {
