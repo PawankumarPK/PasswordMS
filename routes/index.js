@@ -126,4 +126,11 @@ router.get('/add-new-password', function (req, res, next) {
 router.get('/view-all-password', function (req, res, next) {
   res.render('view-all-password', { title: 'Password Management System' });
 });
+
+/* Logout */
+router.get('/logout', function (req, res, next) {
+  localStorage.removeItem("userToken")
+  localStorage.removeItem("loginUser")
+  res.redirect("/")
+});
 module.exports = router;
