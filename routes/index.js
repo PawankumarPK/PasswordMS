@@ -27,7 +27,12 @@ function checkLoginUser(req, res, next) {
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Password Management System', msg: " " });
+  var loginUser = localStorage.getItem("loginUser")
+  if (loginUser) {
+    res.redirect("./dashboard")
+  } else {
+    res.render('index', { title: 'Password Management System', msg: " " });
+  }
 });
 
 router.post('/', function (req, res, next) {
@@ -88,7 +93,12 @@ function checkUsername(req, res, next) {
 
 /* GET signup page. */
 router.get('/signup', function (req, res, next) {
-  res.render('signup', { title: 'Password Management System', msg: " " });
+  var loginUser = localStorage.getItem("loginUser")
+  if (loginUser) {
+    res.redirect("./dashboard")
+  } else {
+    res.render('signup', { title: 'Password Management System', msg: " " });
+  }
 });
 
 router.post('/signup', checkUsername, checkEmail, function (req, res, next) {
