@@ -119,24 +119,28 @@ router.post('/signup', checkUsername, checkEmail, function (req, res, next) {
 
 /* Password Category. */
 router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
-  res.render('password-category', { title: 'Password Management System' });
+  var loginUser = localStorage.getItem("loginUser")
+  res.render('password-category', { title: 'Password Management System', loginUser: loginUser });
 });
 
 /* Add new  Category. */
 router.get('/add-new-category', checkLoginUser, function (req, res, next) {
-  res.render('addNewCategory', { title: 'Password Management System' });
+  var loginUser = localStorage.getItem("loginUser")
+  res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser });
 });
 
 
 /* Add new password. */
 router.get('/add-new-password', checkLoginUser, function (req, res, next) {
-  res.render('add-new-password', { title: 'Password Management System' });
+  var loginUser = localStorage.getItem("loginUser")
+  res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser });
 });
 
 
 /* view all password. */
 router.get('/view-all-password', checkLoginUser, function (req, res, next) {
-  res.render('view-all-password', { title: 'Password Management System' });
+  var loginUser = localStorage.getItem("loginUser")
+  res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser });
 });
 
 /* Logout */
