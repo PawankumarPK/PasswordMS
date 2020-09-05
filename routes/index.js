@@ -165,9 +165,9 @@ router.post('/passwordCategory/edit/', checkLoginUser, function (req, res, next)
   var loginUser = localStorage.getItem("loginUser")
   var passcat_id = req.body.id
   var passwordCategory = req.body.passwordCategory
-  var update_passcat = passCatModel.findByIdAndUpdate(passcat_id,{password_category:passwordCategory})
-  update_passcat.exec(function(err,doc){
-    if(err) throw err
+  var update_passcat = passCatModel.findByIdAndUpdate(passcat_id, { password_category: passwordCategory })
+  update_passcat.exec(function (err, doc) {
+    if (err) throw err
     res.redirect("/passwordCategory")
 
   })
@@ -208,7 +208,11 @@ router.post('/add-new-category', checkLoginUser, [check("passwordCategory", "Ent
 /* Add new password. */
 router.get('/add-new-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser });
+  getPassCat.exec(function (err, data) {
+    if (err) throw err
+    res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser, records: data });
+  })
+
 });
 
 
