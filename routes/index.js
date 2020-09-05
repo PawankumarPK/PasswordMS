@@ -137,6 +137,17 @@ router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
   });
 })
 
+router.get('/passwordCategory/delete/:id', checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var passcat_id = req.params.id
+  var passdelete = passCatModel.findByIdAndDelete(passcat_id)
+  
+  passdelete.exec(function (err) {
+    if (err) throw err
+    res.redirect("/passwordCategory")
+  });
+})  
+
 /* Add new  Category. */
 router.get('/add-new-category', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem('loginUser')
