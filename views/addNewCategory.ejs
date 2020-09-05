@@ -37,7 +37,7 @@
                 <li><a href="/logout">Logout</a></li>
             </ul>
             <div class="navbar-header" style="float:right"><a class="navbar-brand" href="#">
-                LoggedIn As:<%if(loginUser){%> <%= loginUser%><%}%></a></div>
+                    LoggedIn As:<%if(loginUser){%> <%= loginUser%><%}%></a></div>
 
         </div>
     </nav>
@@ -51,12 +51,12 @@
                         <div class="panel-title">Add New Password Category</div>
                     </div>
                     <div class="panel-body">
-                        <form action="/" id="EmployeeForm" class="form-horizontal" method="post" role="form">
+                        <form action="/add-new-category" id="EmployeeForm" class="form-horizontal" method="post" role="form">
 
                             <div class="form-group">
                                 <label for="username" class="col-md-3 control-label">Category Name</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="uname" placeholder="Enter Password Category Name">
+                                    <input type="text" class="form-control" name="passwordCategory" placeholder="Enter Password Category Name">
                                 </div>
                             </div>
 

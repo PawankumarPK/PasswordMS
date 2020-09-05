@@ -4,6 +4,7 @@ var router = express.Router();
 var bcrypt = require("bcryptjs")
 
 var jwt = require("jsonwebtoken")
+const { check, validationResult } = require("express-validator")
 
 //web token
 //store in local storage
@@ -136,7 +137,20 @@ router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
 /* Add new  Category. */
 router.get('/add-new-category', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
+
   res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser });
+
+});
+
+router.post('/add-new-category', checkLoginUser,[check("passwordCategory", "Enter Password Category Name").isLength({ min: 1 })], function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    console.log(errors.mapped());
+    res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser });
+  } else {
+    res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser });
+  }
 });
 
 
