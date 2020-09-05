@@ -53,6 +53,14 @@
                     <div class="panel-body">
                         <form action="/add-new-category" id="EmployeeForm" class="form-horizontal" method="post" role="form">
 
+                    <% if(errors != ""){%>
+                    <p style="text-align: center;color: red"><%= errors.passwordCategory.msg %></p>
+                    <%}%>
+
+                    <% if(success != ""){%>
+                        <p style="text-align: center;color: green"><%= success %></p>
+                        <%}%>
+    
                             <div class="form-group">
                                 <label for="username" class="col-md-3 control-label">Category Name</label>
                                 <div class="col-md-9">
