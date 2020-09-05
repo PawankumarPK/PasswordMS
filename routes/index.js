@@ -137,16 +137,47 @@ router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
   });
 })
 
+//Delete
 router.get('/passwordCategory/delete/:id', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
   var passcat_id = req.params.id
   var passdelete = passCatModel.findByIdAndDelete(passcat_id)
-  
+
   passdelete.exec(function (err) {
     if (err) throw err
     res.redirect("/passwordCategory")
   });
-})  
+})
+
+//Update
+router.get('/passwordCategory/edit/:id', checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var passcat_id = req.params.id
+  var getPassCategory = passCatModel.findById(passcat_id)
+
+  getPassCategory.exec(function (err, data) {
+    if (err) throw err
+    res.render('edit_pass_category', { title: 'Password Management System', errors: "", success: "", loginUser: loginUser, records: data, id: passcat_id });
+  });
+})
+
+router.post('/passwordCategory/edit/', checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var passcat_id = req.body.id
+  var passwordCategory = req.body.passwordCategory
+  var update_passcat = passCatModel.findByIdAndUpdate(passcat_id,{password_category:passwordCategory})
+  update_passcat.exec(function(err,doc){
+    if(err) throw err
+    res.redirect("/passwordCategory")
+
+  })
+
+  // getPassCategory.exec(function (err, data) {
+  //   if (err) throw err
+  //   res.render('edit_pass_category', { title: 'Password Management System', errors: "", success: "", loginUser: loginUser, records: data, id: passcat_id });
+  // });
+})
+
 
 /* Add new  Category. */
 router.get('/add-new-category', checkLoginUser, function (req, res, next) {
