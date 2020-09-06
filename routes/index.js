@@ -15,6 +15,7 @@ var userModule = require("../modules/user")
 var passCatModel = require("../modules/password_category")
 var passModel = require("../modules/add_password")
 var getPassCat = passCatModel.find({})
+var getAllPass = passModel.find({})
 
 function checkLoginUser(req, res, next) {
   var userToken = localStorage.getItem("userToken")
@@ -240,7 +241,11 @@ router.post('/add-new-password', checkLoginUser, function (req, res, next) {
 /* view all password. */
 router.get('/view-all-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser });
+  getAllPass.exec(function(err,data){
+    if(err) throw err
+    res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser, records:data });
+  })
+  
 });
 
 /* Logout */
