@@ -237,16 +237,29 @@ router.post('/add-new-password', checkLoginUser, function (req, res, next) {
   });
 })
 
-
 /* view all password. */
 router.get('/view-all-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  getAllPass.exec(function(err,data){
-    if(err) throw err
-    res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser, records:data });
+  getAllPass.exec(function (err, data) {
+    if (err) throw err
+    res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser, records: data });
   })
-  
+
 });
+
+router.get('/view-all-password/delete/:id', checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var deletePassDetailId = req.params.id
+  console.log(deletePassDetailId);
+  var deletePassCategory = passModel.findByIdAndDelete(deletePassDetailId)
+
+  deletePassCategory.exec(function (err, data) {
+    if (err) throw err
+    res.redirect("/view-all-password")
+  })
+});
+
+
 
 /* Logout */
 router.get('/logout', function (req, res, next) {
