@@ -218,9 +218,11 @@ router.get('/add-new-password', checkLoginUser, function (req, res, next) {
 router.post('/add-new-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem('loginUser');
   var pass_cat = req.body.pass_cat;
+  var project_name = req.body.project_name;
   var pass_details = req.body.pass_details;
   var password_details = new passModel({
     password_category: pass_cat,
+    project_name: project_name,
     password_detail: pass_details
   });
 
