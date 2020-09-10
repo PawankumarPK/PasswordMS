@@ -159,7 +159,10 @@ router.get('/passwordCategory/edit/:id', checkLoginUser, function (req, res, nex
 
   getPassCategory.exec(function (err, data) {
     if (err) throw err
-    res.render('edit_pass_category', { title: 'Password Management System', errors: "", success: "", loginUser: loginUser, records: data, id: passcat_id });
+    res.render('edit_pass_category', {
+      title: 'Password Management System', errors: "", success: "",
+      loginUser: loginUser, records: data, id: passcat_id
+    });
   });
 })
 
@@ -247,7 +250,8 @@ router.get('/view-all-password', checkLoginUser, function (req, res, next) {
 
 });
 
-router.get('/view-all-password/delete/:id', checkLoginUser, function (req, res, next) {
+//Delete
+router.get('/password_details/delete/:id', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
   var deletePassDetailId = req.params.id
   console.log(deletePassDetailId);
@@ -259,6 +263,21 @@ router.get('/view-all-password/delete/:id', checkLoginUser, function (req, res, 
   })
 });
 
+//Edit
+router.get("/password_details/edit/:id", checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var editPassDetail_id = req.params.id
+  var getPassCategory = passModel.findById(editPassDetail_id)
+
+  getPassCategory.exec(function (err, data) {
+    if (err) throw err
+    res.render('edit_password_details', {
+      title: 'Password Management System', loginUser: loginUser,
+      records: data, id: editPassDetail_id
+    });
+
+  })
+});
 
 
 /* Logout */
