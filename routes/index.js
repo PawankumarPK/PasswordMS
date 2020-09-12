@@ -254,7 +254,6 @@ router.get('/view-all-password', checkLoginUser, function (req, res, next) {
 router.get('/password_details/delete/:id', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
   var deletePassDetailId = req.params.id
-  console.log(deletePassDetailId);
   var deletePassCategory = passModel.findByIdAndDelete(deletePassDetailId)
 
   deletePassCategory.exec(function (err, data) {
