@@ -240,12 +240,48 @@ router.post('/add-new-password', checkLoginUser, function (req, res, next) {
   });
 })
 
-/* view all password. */
+/* view all password. and pagination*/
 router.get('/view-all-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  getAllPass.exec(function (err, data) {
+
+  var perPage = 2
+  var page = 1
+
+  getAllPass.skip((perPage * page) - perPage).limit(perPage).exec(function (err, data) {
     if (err) throw err
-    res.render('view-all-password', { title: 'Password Management System', loginUser: loginUser, records: data });
+    passModel.countDocuments({}).exec((err, count) => {
+      res.render('view-all-password', {
+        title: 'Password Management System',
+        loginUser: loginUser,
+        records: data,
+        current: page,
+        pages: Math.ceil(count / perPage)
+
+      });
+    })
+  })
+
+});
+
+//get data into page using pagination
+router.get('/view-all-password/:page', checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+
+  var perPage = 2
+  var page = req.params.page || 1
+
+  getAllPass.skip((perPage * page) - perPage).limit(perPage).exec(function (err, data) {
+    if (err) throw err
+    passModel.countDocuments({}).exec((err, count) => {
+      res.render('view-all-password', {
+        title: 'Password Management System',
+        loginUser: loginUser,
+        records: data,
+        current: page,
+        pages: Math.ceil(count / perPage)
+
+      });
+    })
   })
 
 });
