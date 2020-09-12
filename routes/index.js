@@ -21,7 +21,7 @@ function checkLoginUser(req, res, next) {
   var userToken = localStorage.getItem("userToken")
   try {
     var decode = jwt.verify(userToken, "loginToken")
-  } catch{
+  } catch {
     res.redirect("/")
   }
   next()
@@ -266,16 +266,16 @@ router.get('/password_details/delete/:id', checkLoginUser, function (req, res, n
 //Edit
 router.get("/password_details/edit/:id", checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  var editPassDetail_id = req.params.id
-  var getPassCategory = passModel.findById(editPassDetail_id)
+  var id = req.params.id
+  var getPassDetails = passModel.findById({ _id: id })
 
-  getPassCategory.exec(function (err, data) {
+  getPassDetails.exec(function (err, data) {
     if (err) throw err
-    res.render('edit_password_details', {
-      title: 'Password Management System', loginUser: loginUser,
-      records: data, id: editPassDetail_id
-    });
-
+    getPassCat.exec(function (err, data1) {
+      res.render('edit_password_details', {
+        title: 'Password Management System', loginUser: loginUser, record:data,records: data1, id: id, success:""
+      });
+    })
   })
 });
 
