@@ -273,11 +273,40 @@ router.get("/password_details/edit/:id", checkLoginUser, function (req, res, nex
     if (err) throw err
     getPassCat.exec(function (err, data1) {
       res.render('edit_password_details', {
-        title: 'Password Management System', loginUser: loginUser, record:data,records: data1, id: id, success:""
+        title: 'Password Management System', loginUser: loginUser, record: data, records: data1, id: id, success: ""
       });
     })
   })
 });
+
+//Post
+router.post("/password_details/edit/:id", checkLoginUser, function (req, res, next) {
+  var loginUser = localStorage.getItem("loginUser")
+  var id = req.params.id
+  var passwordCategory = req.body.pass_cat
+  var projectName = req.body.project_name
+  var passwordDetail = req.body.pass_details
+  var updatePassDetails = passModel.findByIdAndUpdate(id, {
+    password_category: passwordCategory,
+    project_name: projectName,
+    password_detail: passwordDetail
+  })
+
+  updatePassDetails.exec(function (err, doc) {
+    if (err) throw err
+    var getPassDetails = passModel.findById({ _id: id })
+    getPassDetails.exec(function (err, data) {
+      if (err) throw err
+      getPassCat.exec(function (err, data1) {
+        res.render('edit_password_details', {
+          title: 'Password Management System', loginUser: loginUser, record: data,
+          records: data1, id: id, success: "Password Details Update Successfully"
+        });
+      })
+
+    })
+  })
+})
 
 
 /* Logout */
