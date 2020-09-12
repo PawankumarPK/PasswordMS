@@ -244,8 +244,8 @@ router.post('/add-new-password', checkLoginUser, function (req, res, next) {
 router.get('/view-all-password', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
 
-  var perPage = 2
-  var page = 1
+  var perPage = 5
+  var page = req.params.page || 1
 
   getAllPass.skip((perPage * page) - perPage).limit(perPage).exec(function (err, data) {
     if (err) throw err
@@ -263,11 +263,11 @@ router.get('/view-all-password', checkLoginUser, function (req, res, next) {
 
 });
 
-//get data into page using pagination
+//get data into page using pagination code
 router.get('/view-all-password/:page', checkLoginUser, function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
 
-  var perPage = 2
+  var perPage = 5
   var page = req.params.page || 1
 
   getAllPass.skip((perPage * page) - perPage).limit(perPage).exec(function (err, data) {
