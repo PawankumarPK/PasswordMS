@@ -62,12 +62,6 @@ router.post('/', function (req, res, next) {
   })
 });
 
-/* GET dashboard page. */
-router.get('/dashboard', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: " " });
-});
-
 function checkEmail(req, res, next) {
   var email = req.body.email
   var checkExitsEmail = userModule.findOne({ email: email })
