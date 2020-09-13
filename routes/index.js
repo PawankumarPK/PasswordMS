@@ -12,10 +12,6 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 }
 
 var userModule = require("../modules/user")
-var passCatModel = require("../modules/password_category")
-var passModel = require("../modules/add_password")
-var getPassCat = passCatModel.find({})
-var getAllPass = passModel.find({})
 
 function checkLoginUser(req, res, next) {
   var userToken = localStorage.getItem("userToken")
