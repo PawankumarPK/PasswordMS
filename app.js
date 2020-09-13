@@ -6,6 +6,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
+var addNewCategoryRouter = require('./routes/add-new-category');
+var passwordCategoryRouter = require('./routes/passwordCategory');
+var addNewPasswordRouter = require('./routes/add-new-password');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -22,6 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/add-new-category', addNewCategoryRouter);
+app.use('/passwordCategory', passwordCategoryRouter);
+app.use('/add-new-password', addNewPasswordRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

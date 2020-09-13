@@ -124,115 +124,11 @@ router.post('/signup', checkUsername, checkEmail, function (req, res, next) {
 
 });
 
-/* Password Category. */
-router.get('/passwordCategory', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  getPassCat.exec(function (err, data) {
-    if (err) throw err
-    res.render('password-category', { title: 'Password Management System', loginUser: loginUser, records: data });
-  });
-})
-
-//Delete
-router.get('/passwordCategory/delete/:id', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  var passcat_id = req.params.id
-  var passdelete = passCatModel.findByIdAndDelete(passcat_id)
-
-  passdelete.exec(function (err) {
-    if (err) throw err
-    res.redirect("/passwordCategory")
-  });
-})
-
-//Update
-router.get('/passwordCategory/edit/:id', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  var passcat_id = req.params.id
-  var getPassCategory = passCatModel.findById(passcat_id)
-
-  getPassCategory.exec(function (err, data) {
-    if (err) throw err
-    res.render('edit_pass_category', {
-      title: 'Password Management System', errors: "", success: "",
-      loginUser: loginUser, records: data, id: passcat_id
-    });
-  });
-})
-
-router.post('/passwordCategory/edit/', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  var passcat_id = req.body.id
-  var passwordCategory = req.body.passwordCategory
-  var update_passcat = passCatModel.findByIdAndUpdate(passcat_id, { password_category: passwordCategory })
-  update_passcat.exec(function (err, doc) {
-    if (err) throw err
-    res.redirect("/passwordCategory")
-
-  })
-
-  // getPassCategory.exec(function (err, data) {
-  //   if (err) throw err
-  //   res.render('edit_pass_category', { title: 'Password Management System', errors: "", success: "", loginUser: loginUser, records: data, id: passcat_id });
-  // });
-})
 
 
-/* Add new  Category. */
-router.get('/add-new-category', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem('loginUser')
-  res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: "", success: "" });
-});
-
-router.post('/add-new-category', checkLoginUser, [check("passwordCategory", "Enter Password Category Name").isLength({ min: 1 })], function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    //console.log(errors.mapped());
-    res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: errors.mapped(), success: "" });
-  } else {
-    var passCatName = req.body.passwordCategory
-    var passCatDetails = new passCatModel({
-      password_category: passCatName
-    })
-    passCatDetails.save(function (err, doc) {
-      if (err) throw err
-      res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: "", success: "Password Category Inserted Successfully" });
-    })
-
-  }
-});
 
 
-/* Add new password. */
-router.get('/add-new-password', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
-  getPassCat.exec(function (err, data) {
-    if (err) throw err
-    res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser, records: data, success: "" });
-  })
 
-});
-router.post('/add-new-password', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem('loginUser');
-  var pass_cat = req.body.pass_cat;
-  var project_name = req.body.project_name;
-  var pass_details = req.body.pass_details;
-  var password_details = new passModel({
-    password_category: pass_cat,
-    project_name: project_name,
-    password_detail: pass_details
-  });
-
-  password_details.save(function (err, doc) {
-    getPassCat.exec(function (err, data) {
-      if (err) throw err;
-      res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser, records: data, success: "Password Details Inserted Successfully" });
-
-    });
-
-  });
-})
 
 /* view all password. and pagination*/
 
