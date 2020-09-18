@@ -6,14 +6,18 @@ var jwt = require("jsonwebtoken")
 var passCatModel = require('../modules/password_category');
 var passModel = require('../modules/add_password');
 
-var getPassCat= passCatModel.find({});
-var getAllPass= passModel.find({});
+var getPassCat = passCatModel.find({});
+var getAllPass = passModel.find({});
 
 
 function checkLoginUser(req, res, next) {
     var userToken = localStorage.getItem("userToken")
     try {
-        var decode = jwt.verify(userToken, "loginToken")
+        if (req.session.username) {
+            var decode = jwt.verify(userToken, "loginToken")
+        } else {
+            res.redirect("/")
+        }
     } catch {
         res.redirect("/")
     }
@@ -33,8 +37,10 @@ router.get('/', checkLoginUser, function (req, res, next) {
     var loginUser = localStorage.getItem("loginUser")
     passModel.countDocuments({}).exec((err, count) => {
         passCatModel.countDocuments({}).exec((err, countasscat) => {
-            res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: '',
-             totalPassword: count, totalPassCat: countasscat });
+            res.render('dashboard', {
+                title: 'Password Management System', loginUser: loginUser, msg: '',
+                totalPassword: count, totalPassCat: countasscat
+            });
         });
 
     })

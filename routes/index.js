@@ -16,7 +16,11 @@ var userModule = require("../modules/user")
 function checkLoginUser(req, res, next) {
   var userToken = localStorage.getItem("userToken")
   try {
-    var decode = jwt.verify(userToken, "loginToken")
+    if (req.session.username) {
+      var decode = jwt.verify(userToken, "loginToken")
+    } else {
+      res.redirect("/")
+    }
   } catch {
     res.redirect("/")
   }
@@ -27,7 +31,7 @@ function checkLoginUser(req, res, next) {
 /* GET login page. */
 router.get('/', function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  if (loginUser) {
+  if (req.session.username) {
     res.redirect("./dashboard")
   } else {
     res.render('index', { title: 'Password Management System', msg: " " });
@@ -51,6 +55,7 @@ router.post('/', function (req, res, next) {
       //store data locally 
       localStorage.setItem("userToken", token)
       localStorage.setItem("loginUser", username)
+      req.session.username = username
       res.redirect("/dashboard")
     } else {
       res.render('index', { title: 'Password Management System', msg: "Invalid username and password" });
@@ -87,7 +92,7 @@ function checkUsername(req, res, next) {
 /* GET signup page. */
 router.get('/signup', function (req, res, next) {
   var loginUser = localStorage.getItem("loginUser")
-  if (loginUser) {
+  if (req.session.username) {
     res.redirect("./dashboard")
   } else {
     res.render('signup', { title: 'Password Management System', msg: " " });
@@ -179,6 +184,12 @@ router.get('/view-all-password/:page', checkLoginUser, function (req, res, next)
 
 /* Logout */
 router.get('/logout', function (req, res, next) {
+  
+  req.session.destroy(function (err) {
+    if (err) {
+      res.redirect("/")
+    }
+  })
   localStorage.removeItem("userToken")
   localStorage.removeItem("loginUser")
   res.redirect("/")

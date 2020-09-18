@@ -10,7 +10,11 @@ var getPassCat = passCatModel.find({})
 function checkLoginUser(req, res, next) {
     var userToken = localStorage.getItem("userToken")
     try {
-        var decode = jwt.verify(userToken, "loginToken")
+        if (req.session.username) {
+            var decode = jwt.verify(userToken, "loginToken")
+        } else {
+            res.redirect("/")
+        }
     } catch {
         res.redirect("/")
     }
