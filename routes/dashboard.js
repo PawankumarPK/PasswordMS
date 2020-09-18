@@ -2,9 +2,12 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require("bcryptjs")
 var jwt = require("jsonwebtoken")
-const { check, validationResult } = require("express-validator")
 
-var userModule = require("../modules/user")
+var passCatModel = require('../modules/password_category');
+var passModel = require('../modules/add_password');
+
+var getPassCat= passCatModel.find({});
+var getAllPass= passModel.find({});
 
 
 function checkLoginUser(req, res, next) {
@@ -28,8 +31,12 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 /* GET dashboard page. */
 router.get('/', checkLoginUser, function (req, res, next) {
     var loginUser = localStorage.getItem("loginUser")
-    res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: " " });
-});
+    passModel.countDocuments({}).exec((err, count) => {
+        passCatModel.countDocuments({}).exec((err, countasscat) => {
+            res.render('dashboard', { title: 'Password Management System', loginUser: loginUser, msg: '',
+             totalPassword: count, totalPassCat: countasscat });
+        });
 
-
+    })
+})
 module.exports = router;
