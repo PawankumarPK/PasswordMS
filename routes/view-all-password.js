@@ -34,7 +34,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 }
 
 router.get('/', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
+  var loginUser = req.session.username
 
   var options = {
     offset: 1,

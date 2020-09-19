@@ -184,14 +184,12 @@ router.get('/view-all-password/:page', checkLoginUser, function (req, res, next)
 
 /* Logout */
 router.get('/logout', function (req, res, next) {
-  
+
   req.session.destroy(function (err) {
     if (err) {
       res.redirect("/")
     }
   })
-  localStorage.removeItem("userToken")
-  localStorage.removeItem("loginUser")
   res.redirect("/")
 });
 module.exports = router;

@@ -30,12 +30,12 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 /* Add new  Category. */
 router.get('/', checkLoginUser, function (req, res, next) {
-    var loginUser = localStorage.getItem('loginUser')
+    var loginUser = req.session.username
     res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: "", success: "" });
 });
 
 router.post('/', checkLoginUser, [check("passwordCategory", "Enter Password Category Name").isLength({ min: 1 })], function (req, res, next) {
-    var loginUser = localStorage.getItem("loginUser")
+    var loginUser = req.session.username
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         //console.log(errors.mapped());

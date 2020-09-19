@@ -31,7 +31,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 /* Add new password. */
 router.get('/', checkLoginUser, function (req, res, next) {
-  var loginUser = localStorage.getItem("loginUser")
+  var loginUser = req.session.username
   getPassCat.exec(function (err, data) {
     if (err) throw err
     res.render('add-new-password', { title: 'Password Management System', loginUser: loginUser, records: data, success: "" });

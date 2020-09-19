@@ -44,7 +44,7 @@ router.get('/delete/:id', checkLoginUser, function (req, res, next) {
 
 //Edit
 router.get("/edit/:id", checkLoginUser, function (req, res, next) {
-    var loginUser = localStorage.getItem("loginUser")
+    var loginUser = req.session.username
     var id = req.params.id
     var getPassDetails = passModel.findById({ _id: id })
 

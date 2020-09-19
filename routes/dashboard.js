@@ -34,7 +34,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 
 /* GET dashboard page. */
 router.get('/', checkLoginUser, function (req, res, next) {
-    var loginUser = localStorage.getItem("loginUser")
+    var loginUser = req.session.username
     passModel.countDocuments({}).exec((err, count) => {
         passCatModel.countDocuments({}).exec((err, countasscat) => {
             res.render('dashboard', {
