@@ -1,7 +1,7 @@
 var express = require("express")
 var router = express.Router()
 var passCatModel = require("../modules/password_category")
-var getPassCat = passCatModel.find({}, { "password_category": 1, "_id": 0 })
+var getPassCat = passCatModel.find({}, { "password_category": 1})
 
 router.get("/getCategory", function (req, res) {
 
@@ -15,9 +15,24 @@ router.post("/add-category", function (req, res) {
     var passCategory = req.body.pass_cat
     var passCatDetail = new passCatModel({ password_category: passCategory })
     passCatDetail.save(function (err, data) {
-        if(err) throw err
+        if (err) throw err
         res.send("Data insert successfull")
     })
+})
+
+router.put("/add-updated-category/:id", function (req, res) {
+    var id = req.params.id
+    var passCategory = req.body.pass_cat
+
+    passCatModel.findById(id, function (err, data) {
+        data.password_category = passCategory ? passCategory : data.password_category
+
+        data.save(function (err) {
+            if (err) throw err
+            res.send("Update Data Successfully Using PUT Method")
+        })
+    })
+
 })
 
 module.exports = router
