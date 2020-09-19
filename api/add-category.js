@@ -50,5 +50,13 @@ router.patch("/update-category/:id", function (req, res) {
 
 })
 
+router.delete("/delete-category/",function(req,res){
+    var cat_id = req.body.cat_id
+    passCatModel.findByIdAndRemove(cat_id,function(err,data){
+        if(err) throw err
+        res.send("Delete Item Successfully")
+    })
+})
+
 module.exports = router
 
