@@ -25,13 +25,9 @@ var passSchema = new mongoose.Schema({
     }
 })
 
-conn.on("connected",function(){
-    console.log("Connected Successfully");
-})
-
-conn.on("disconnected",function(){
-    console.log("Disonnected Successfully");
-})
+// conn.on("connected",function(){
+//     console.log("Connected Successfully");
+// })
 
 
 passSchema.plugin(mongoosePaginate);

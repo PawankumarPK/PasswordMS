@@ -27,14 +27,6 @@ var userSchema = new mongoose.Schema({
     }
 })
 
-conn.on("connected",function(){
-    console.log("Connected Successfully");
-})
-
-conn.on("disconnected",function(){
-    console.log("Disonnected Successfully");
-})
-
 
 var userModel = mongoose.model("users",userSchema)
 module.exports = userModel
