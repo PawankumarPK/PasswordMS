@@ -46,7 +46,7 @@ app.use('/password_details', passwordDetailsRouter);
 app.use('/users', usersRouter);
 
 //API 
-app.use('/api/getCategory', passwordCatApi);
+app.use('/', passwordCatApi);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
