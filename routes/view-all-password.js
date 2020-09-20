@@ -65,14 +65,12 @@ router.get('/:page', checkLoginUser, function (req, res, next) {
   getAllPass.skip((perPage * page) - perPage).limit(perPage).exec(function (err, data) {
     if (err) throw err
     passModel.countDocuments({}).exec((err, count) => {
-      res.render('view-all-password', {
-        title: 'Password Management System',
-        loginUser: loginUser,
-        records: data,
+      res.render('view-all-password', {title: 'Password Management System',loginUser: loginUser,records: data,
         current: page,
         pages: Math.ceil(count / perPage)
 
       });
+      console.log(data);
     })
   })
 

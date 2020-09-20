@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 //paginate
 var mongoosePaginate = require('mongoose-paginate');
 
-mongoose.connect("mongodb://localhost:27017/pms",
+mongoose.connect("mongodb+srv://dbPMS:9810507699@clusterpms.u38xv.mongodb.net/dbPMS?retryWrites=true&w=majority",
  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 var conn = mongoose.connection
 
@@ -25,9 +25,9 @@ var passSchema = new mongoose.Schema({
     }
 })
 
-// conn.on("connected",function(){
-//     console.log("Connected Successfully");
-// })
+conn.on("connected",function(){
+    console.log("Connected Successfully");
+})
 
 
 passSchema.plugin(mongoosePaginate);
