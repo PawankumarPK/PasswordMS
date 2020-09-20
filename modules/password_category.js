@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-mongoose.connect("mongodb+srv://dbPMS:9810507699@clusterpms.u38xv.mongodb.net/dbPMS?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost:27017/pms", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 var conn = mongoose.connection
 
 var passcatSchema = new mongoose.Schema({
@@ -15,11 +15,6 @@ var passcatSchema = new mongoose.Schema({
         default: Date.now
     }
 })
-
-conn.on("connected",function(){
-    console.log("Connected Successfully");
-})
-
 
 var passCatModel = mongoose.model("password_categories", passcatSchema)
 module.exports = passCatModel
