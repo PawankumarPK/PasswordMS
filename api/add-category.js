@@ -20,7 +20,11 @@ router.post("/add-category", function (req, res) {
     var passCatDetail = new passCatModel({ password_category: passCategory })
     passCatDetail.save(function (err, data) {
         if (err) throw err
-        res.send("Data insert successfull")
+        //res.send("Data insert successfull")
+        res.status(201).json({
+            message: "Insert data successfully",
+            result: data
+        })
     })
 })
 
@@ -33,7 +37,11 @@ router.put("/add-updated-category/:id", function (req, res) {
 
         data.save(function (err) {
             if (err) throw err
-            res.send("Update Data Successfully Using PUT Method")
+            res.status(201).json({
+                message: "Update data successfully using PUT",
+                result: data
+            })
+            //res.send("Update Data Successfully Using PUT Method")
         })
     })
 
@@ -48,7 +56,11 @@ router.patch("/update-category/:id", function (req, res) {
 
         data.save(function (err) {
             if (err) throw err
-            res.send("Update data successfully using PATCH method")
+            res.status(201).json({
+                message: "Update data successfully using PATCH",
+                result: data
+            })
+            //  res.send("Update data successfully using PATCH method")
         })
     })
 
@@ -58,7 +70,11 @@ router.delete("/delete-category/", function (req, res) {
     var cat_id = req.body.cat_id
     passCatModel.findByIdAndRemove(cat_id, function (err, data) {
         if (err) throw err
-        res.send("Delete Item Successfully")
+        res.status(201).json({
+            message: "Delete Item Successfully",
+            result: data
+        })
+
     })
 })
 
