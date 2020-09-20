@@ -7,7 +7,11 @@ router.get("/getCategory", function (req, res) {
 
     getPassCat.exec(function (err, data) {
         if (err) throw err
-        res.send(data)
+        res.status(200).json({
+            message: "success",
+            result: data
+        })
+
     })
 })
 
@@ -50,10 +54,10 @@ router.patch("/update-category/:id", function (req, res) {
 
 })
 
-router.delete("/delete-category/",function(req,res){
+router.delete("/delete-category/", function (req, res) {
     var cat_id = req.body.cat_id
-    passCatModel.findByIdAndRemove(cat_id,function(err,data){
-        if(err) throw err
+    passCatModel.findByIdAndRemove(cat_id, function (err, data) {
+        if (err) throw err
         res.send("Delete Item Successfully")
     })
 })
