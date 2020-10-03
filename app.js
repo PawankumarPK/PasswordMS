@@ -16,6 +16,7 @@ var session = require('express-session')
 
 //Api
 var passwordCatApi = require('./api/add-category');
+var passwordAllDetails = require('./api/password-details');
 
 
 var app = express();
@@ -47,6 +48,7 @@ app.use('/users', usersRouter);
 
 //API 
 app.use('/', passwordCatApi);
+//app.use('/details', passwordDetails);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
