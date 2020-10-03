@@ -8,7 +8,7 @@ var addPassword = require("../modules/add_password")
 
 //Get
 router.get("/passwordDetails", function (req, res) {
-    var passwordDetails = addPassword.find({})
+    var passwordDetails = addPassword.find().select("_id password_category project_name password_detail")
 
     passwordDetails.exec().then(data => {
         res.status(200).json({
