@@ -3,12 +3,14 @@ const mongoose = require("mongoose")
 var mongoosePaginate = require('mongoose-paginate');
 
 mongoose.connect("mongodb://localhost:27017/pms",
- { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+    { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
 var conn = mongoose.connection
 
 var passSchema = new mongoose.Schema({
+    
     password_category: {
-        type: String,
+        //type: mongoose.Schema.Types.ObjectId, ref: "password_categories",
+        type:String,
         required: true,
     },
     project_name: {

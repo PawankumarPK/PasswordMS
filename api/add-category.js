@@ -8,7 +8,9 @@ var addPassword = require("../modules/add_password")
 
 //Get
 router.get("/passwordDetails", function (req, res) {
-    var passwordDetails = addPassword.find().select("_id password_category project_name password_detail")
+    var passwordDetails = addPassword.find()
+        .select("_id password_category project_name password_detail")
+        .populate("password_category")
 
     passwordDetails.exec().then(data => {
         res.status(200).json({
@@ -24,6 +26,7 @@ router.get("/passwordDetails", function (req, res) {
 
 //Post
 router.post("/addPasswordDetails", function (req, res) {
+
     var category = req.body.passCategory
     var projectName = req.body.projectName
     var passDetails = req.body.passDetails
@@ -48,15 +51,15 @@ router.post("/addPasswordDetails", function (req, res) {
 })
 
 //Delete
-router.delete("/delete-pass-detail",function(req,res){
+router.delete("/delete-pass-detail", function (req, res) {
     var pass_detail_id = req.body.pass_detail_id
 
-    addPassword.findByIdAndRemove(pass_detail_id).then(data =>{
+    addPassword.findByIdAndRemove(pass_detail_id).then(data => {
         res.status(201).json({
-            message:"Success",
+            message: "Success",
             result: data
         })
-    }).catch(err =>{
+    }).catch(err => {
         res.json(err)
     })
 })
