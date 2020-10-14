@@ -18,6 +18,7 @@ var session = require('express-session')
 var passwordCatApi = require('./api/add-category');
 var passwordAllDetails = require('./api/password-details');
 var productsApi = require('./api/product')
+var userApi = require('./api/user')
 
 
 var app = express();
@@ -46,6 +47,7 @@ app.use('/add-new-password', addNewPasswordRouter);
 app.use('/view-all-password', viewAllPasswordRouter);
 app.use('/password_details', passwordDetailsRouter);
 app.use('/users', usersRouter);
+app.use('/usersapi', userApi);
 
 //API 
 app.use('/', passwordCatApi);

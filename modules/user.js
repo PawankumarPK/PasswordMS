@@ -18,7 +18,9 @@ var userSchema = new mongoose.Schema({
         required: true,
         index: {
             unique: true
-        }
+        },
+        match:/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    
     },
     password: {
         type: String,
@@ -31,6 +33,6 @@ var userSchema = new mongoose.Schema({
 })
 
 
-var userModel = mongoose.model("users",userSchema)
+var userModel = mongoose.model("users", userSchema)
 module.exports = userModel
 
