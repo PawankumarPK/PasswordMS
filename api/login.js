@@ -20,7 +20,6 @@ router.post("/login", function (req, res) {
                     message: "Auth Failed",
                 })
             } else {
-
                 bcrypt.compare(password, user[0].password, function (err, result) {
                     if (err) {
                         res.status(404).json({
@@ -28,11 +27,20 @@ router.post("/login", function (req, res) {
                         })
                     }
                     if (result) {
-                        res.status(201).json({
+                        var token = jwt.sign({
+                            username: user[0].username,
+                            userId: user[0]._id
+                        },
+                            'secret', {
+                            expiresIn: "1h"
+                        }
+                        )
+
+                        res.status(200).json({
                             message: "User Found",
-                            user: user
+                            token: token
                         })
-                    }else{
+                    } else {
                         res.status(404).json({
                             message: "Auth Failed",
                         })
