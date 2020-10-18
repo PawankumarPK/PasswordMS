@@ -6,7 +6,7 @@ var upload = multer({ dest: "public/uploads/" })
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./public/uploads/")
+        cb(null, "./public/uploads/")   
     },
     filename: function (req, file, cb) {
         //original name comes from log see below line
