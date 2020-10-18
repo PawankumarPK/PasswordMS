@@ -3,7 +3,7 @@ var router = express.Router()
 var product = require("../modules/products")
 var checkAuth = require("../api/middleware/auth")
 
-router.get('/allProducts', function (req, res) {
+router.get('/allProducts',checkAuth, function (req, res) {
     var allProducts = product.find()
 
     allProducts.exec().then(data => {
