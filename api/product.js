@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         //original name comes from log see below line
-        //console.log(req.file);
+        console.log(req.file);
 
         cb(null, Date.now() + file.originalname)
     }
