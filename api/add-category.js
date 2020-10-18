@@ -2,27 +2,13 @@ var express = require("express")
 var router = express.Router()
 var passCatModel = require("../modules/password_category")
 var getPassCat = passCatModel.find({}, { "password_category": 1 })
+const categoryController = require("../api/controller/category")
 
 //password details
 var addPassword = require("../modules/add_password")
 
 //Get
-router.get("/passwordDetails", function (req, res) {
-    var passwordDetails = addPassword.find()
-        .select("_id password_category project_name password_detail")
-        .populate("password_category")
-
-    passwordDetails.exec().then(data => {
-        res.status(200).json({
-            message: "Success",
-            result: data
-        })
-
-    }).catch(err => {
-        res.json(err)
-    })
-
-})
+router.get("/passwordDetails", categoryController.passwordDetails)
 
 //Post
 router.post("/addPasswordDetails", function (req, res) {
@@ -36,7 +22,6 @@ router.post("/addPasswordDetails", function (req, res) {
         project_name: projectName,
         password_detail: passDetails
     })
-
 
     savePasswordDetails.save().then(data => {
         res.status(201).json({
@@ -64,28 +49,7 @@ router.delete("/delete-pass-detail", function (req, res) {
     })
 })
 
-router.get("/getCategory", function (req, res) {
-
-    /*
-    getPassCat.exec(function (err, data) {
-        if (err) throw err
-        res.status(200).json({
-            message: "success",
-            result: data
-        })
-
-        */
-
-    getPassCat.exec().then(data => {
-        res.status(200).json({
-            message: "success",
-            result: data
-        })
-    }).catch(err => {
-        res.json(err)
-    })
-
-})
+router.get("/getCategory", categoryController.getCategory)
 
 router.post("/add-category", function (req, res) {
     var passCategory = req.body.pass_cat
