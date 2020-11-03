@@ -10,6 +10,11 @@ var passcatSchema = new mongoose.Schema({
             unique: true
         }
     },
+    user_id: {
+        type: String,
+        required: true
+
+    },
     date: {
         type: Date,
         default: Date.now

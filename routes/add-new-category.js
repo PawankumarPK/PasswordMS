@@ -4,7 +4,9 @@ var bcrypt = require("bcryptjs")
 var jwt = require("jsonwebtoken")
 const { check, validationResult } = require("express-validator")
 
-var passCatModel = require("../modules/password_category")
+const {colorCode}  = require("../modules/middlewareID/userID")
+var passCatModel = require("../modules/password_category");
+//var {colorCode}  = require('../modules/middlewareID/userID');
 
 function checkLoginUser(req, res, next) {
     var userToken = localStorage.getItem("userToken")
@@ -42,12 +44,17 @@ router.post('/', checkLoginUser, [check("passwordCategory", "Enter Password Cate
         res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: errors.mapped(), success: "" });
     } else {
         var passCatName = req.body.passwordCategory
+        var uId = colorCode.uId
+        
         var passCatDetails = new passCatModel({
-            password_category: passCatName
+            password_category: passCatName,
+            user_id: uId
         })
         passCatDetails.save(function (err, doc) {
             if (err) throw err
+            console.log("=====ID",uId);
             res.render('addNewCategory', { title: 'Password Management System', loginUser: loginUser, errors: "", success: "Password Category Inserted Successfully" });
+            
         })
 
     }

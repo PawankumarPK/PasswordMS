@@ -11,7 +11,8 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./scratch');
 }
 
-var userModule = require("../modules/user")
+var userModule = require("../modules/user");
+const { colorCode } = require('../modules/middlewareID/userID');
 
 function checkLoginUser(req, res, next) {
   var userToken = localStorage.getItem("userToken")
@@ -48,6 +49,11 @@ router.post('/', function (req, res, next) {
     if (err) throw err
 
     var getUserID = data._id
+
+    colorCode.uId = getUserID
+    console.log("======>>>>",colorCode.uId);
+
+
     var getPassword = data.password
     if (bcrypt.compareSync(password, getPassword)) {
       //we can add any value from userID

@@ -82,15 +82,6 @@ router.put("/add-updated-category/:id", function (req, res) {
     passCatModel.findById(id, function (err, data) {
         data.password_category = passCategory ? passCategory : data.password_category
 
-        // data.save(function (err) {
-        //     if (err) throw err
-        //     res.status(201).json({
-        //         message: "Update data successfully using PUT",
-        //         result: data
-        //     })
-        //     //res.send("Update Data Successfully Using PUT Method")
-        // })
-
         data.save().then(data => {
             res.status(201).json({
                 message: "Update data successfully using PUT",

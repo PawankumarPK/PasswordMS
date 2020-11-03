@@ -20,6 +20,7 @@ var passwordAllDetails = require('./api/password-details');
 var productsApi = require('./api/product')
 var userApi = require('./api/user')
 var loginApi = require('./api/login')
+var categories = require('./api/categories')
 
 
 var app = express();
@@ -55,6 +56,7 @@ app.use("/userapi", loginApi)
 app.use('/', passwordCatApi);
 //app.use('/details', passwordDetails);
 app.use("/productsApi/", productsApi)
+app.use("/categories/",categories)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

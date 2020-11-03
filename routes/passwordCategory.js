@@ -32,7 +32,7 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 }
 
 /* Password Category. */
-router.get('/', checkLoginUser, function (req, res, next) {
+router.get('/', checkLoginUser  ,function (req, res, next) {
   var loginUser = req.session.username
   getPassCat.exec(function (err, data) {
     if (err) throw err

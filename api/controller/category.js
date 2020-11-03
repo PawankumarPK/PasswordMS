@@ -3,8 +3,6 @@ var addPassword = require("../../modules/add_password")
 var passCatModel = require("../../modules/password_category")
 var getPassCat = passCatModel.find({}, { "password_category": 1 })
 
-
-
 exports.passwordDetails = function (req, res) {
     var passwordDetails = addPassword.find()
         .select("_id password_category project_name password_detail")
@@ -14,7 +12,7 @@ exports.passwordDetails = function (req, res) {
         res.status(200).json({
             message: "Success",
             result: data
-        })
+        })  
 
     }).catch(err => {
         res.json(err)
